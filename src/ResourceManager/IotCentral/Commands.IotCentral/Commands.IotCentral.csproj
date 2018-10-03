@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\tools\Common.Dependencies.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{78770A60-B18A-4442-A982-0CEE0356F8DB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Commands.IotCentral</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Commands.IotCentral</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Package\Debug\ResourceManager\AzureResourceManager\AzureRM.IotCentral\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>..\..\..\Package\Release\ResourceManager\AzureResourceManager\AzureRM.IotCentral\</OutputPath>
+    <DefineConstants>TRACE;SIGN</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>true</DelaySign>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Common\IotCentralBaseCmdlet.cs" />
+    <Compile Include="IotCentral\NewAzureRmIotCentralApp.cs" />
+    <Compile Include="Models\PSIotCentralApp.cs" />
+    <Compile Include="Models\PSIotCentralAppProperties.cs" />
+    <Compile Include="Models\PSIotCentralAppSku.cs" />
+    <Compile Include="Models\PSIotCentralAppSkuInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Microsoft.Azure.Commands.Management.IotCentral.Properties</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="AzureRM.IotCentral.psd1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MSSharedLibKey.snk" />
+    <None Include="packages.config" />
+    <None Include="StartupScripts\*.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="help\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.IotCentral, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Azure.Management.IotCentral.1.0.0\lib\net452\Microsoft.Azure.Management.IotCentral.dll</HintPath>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Rest.ClientRuntime.2.3.13\lib\net452\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Rest.ClientRuntime.Azure.3.3.15\lib\net452\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </PackageReference>
+    <Reference Include="System.Runtime" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <MarkdownFiles Include="$(ProjectDir)help\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(MarkdownFiles)" DestinationFolder="$(OutputPath)\help\" ContinueOnError="false" />
+  </Target>
+</Project>
