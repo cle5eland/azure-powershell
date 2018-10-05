@@ -37,6 +37,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Common\IotCentralBaseCmdlet.cs" />
+    <Compile Include="Common\IotCentralUtils.cs" />
+    <Compile Include="IotCentral\GetAzureRmIotCentralApp.cs" />
     <Compile Include="IotCentral\NewAzureRmIotCentralApp.cs" />
     <Compile Include="Models\PSIotCentralApp.cs" />
     <Compile Include="Models\PSIotCentralAppProperties.cs" />
@@ -82,6 +84,10 @@
     <PackageReference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </PackageReference>
+    <Reference Include="Microsoft.Azure.Management.IotCentral, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Microsoft.Azure.Management.IotCentral.1.0.0\lib\net452\Microsoft.Azure.Management.IotCentral.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

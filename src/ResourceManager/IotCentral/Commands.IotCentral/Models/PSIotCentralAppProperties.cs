@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Commands.IotCentral.Models
 {
-    class PSIotCentralAppProperties
+    public class PSIotCentralAppProperties
     {
         /// <summary>
         /// Gets the ID of the application.

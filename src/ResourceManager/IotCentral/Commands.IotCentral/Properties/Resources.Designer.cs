@@ -59,5 +59,14 @@ namespace Microsoft.Azure.Commands.Management.IotCentral.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create an Iot Central Application.
+        /// </summary>
+        internal static string NewIotCentralApp {
+            get {
+                return ResourceManager.GetString("NewIotCentralApp", resourceCulture);
+            }
+        }
     }
 }
