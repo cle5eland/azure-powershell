@@ -14,7 +14,7 @@ using Microsoft.Azure.Management.IotCentral;
 using Commands.IotCentral.Common;
 using Microsoft.Azure.Management.Internal.Resources.Utilities.Models;
 
-namespace Commands.IotCentral.IotCentral
+namespace Microsoft.Azure.Commands.Management.IotCentral
 {
     [Cmdlet("Get", ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "IotCentralApp", DefaultParameterSetName = ListIotCentralAppsParameterSet)]
     [OutputType(typeof(PSIotCentralApp))]
@@ -52,7 +52,6 @@ namespace Commands.IotCentral.IotCentral
         [Parameter(
             Mandatory = true,
             ValueFromPipelineByPropertyName = true,
-            Position = 1,
             HelpMessage = "Iot Central Application Resource Id",
             ParameterSetName = ResourceIdParameterSet)]
         [ValidateNotNullOrEmpty]

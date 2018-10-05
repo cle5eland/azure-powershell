@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Commands.Management.IotCentral
     public class NewAzureRmIotCentralApp : IotCentralBaseCmdlet
     {
         const string InteractiveIotCentralParameterSet = "InteractiveIotCentralParameterSet";
-        
+
         [Parameter(
             Mandatory = true,
             ValueFromPipelineByPropertyName = true,

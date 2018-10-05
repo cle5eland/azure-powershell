@@ -40,6 +40,8 @@
     <Compile Include="Common\IotCentralUtils.cs" />
     <Compile Include="IotCentral\GetAzureRmIotCentralApp.cs" />
     <Compile Include="IotCentral\NewAzureRmIotCentralApp.cs" />
+    <Compile Include="IotCentral\RemoveAzureRmIotCentralApp.cs" />
+    <Compile Include="IotCentral\SetAzureRmIotCentralApp.cs" />
     <Compile Include="Models\PSIotCentralApp.cs" />
     <Compile Include="Models\PSIotCentralAppProperties.cs" />
     <Compile Include="Models\PSIotCentralAppSku.cs" />

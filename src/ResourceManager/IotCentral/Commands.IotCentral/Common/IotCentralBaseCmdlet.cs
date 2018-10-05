@@ -45,5 +45,7 @@ namespace Microsoft.Azure.Commands.IotCentral.Common
                 return this.resourceManagementClient;
             }
         }
+
+
     }
 }
