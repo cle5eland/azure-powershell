@@ -120,4 +120,10 @@
   <data name="NewIotCentralApp" xml:space="preserve">
     <value>Create an Iot Central Application</value>
   </data>
+  <data name="RemoveIotCentralApp" xml:space="preserve">
+    <value>Delete an Iot Central Application</value>
+  </data>
+  <data name="SetIotCentralApp" xml:space="preserve">
+    <value>Update an Iot Central Application</value>
+  </data>
 </root>

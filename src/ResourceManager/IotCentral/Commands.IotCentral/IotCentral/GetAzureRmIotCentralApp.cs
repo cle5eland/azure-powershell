@@ -20,9 +20,7 @@ namespace Microsoft.Azure.Commands.Management.IotCentral
     [OutputType(typeof(PSIotCentralApp))]
     public class GetAzureRmIotCentralApp : IotCentralBaseCmdlet
     {
-        const string InteractiveIotCentralParameterSet = "InteractiveIotCentralParameterSet";
         const string ListIotCentralAppsParameterSet = "ListIotCentralAppsParameterSet";
-        const string ResourceIdParameterSet = "ResourceIdParameterSet";
 
         [Parameter(
             Mandatory = true,
@@ -38,16 +36,7 @@ namespace Microsoft.Azure.Commands.Management.IotCentral
             ParameterSetName = ListIotCentralAppsParameterSet)]
         [ResourceGroupCompleter]
         [ValidateNotNullOrEmpty]
-        public string ResourceGroupName { get; set; }
-
-        [Parameter(
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            Position = 1,
-            HelpMessage = "Name of the Iot Central Application Resource",
-            ParameterSetName = InteractiveIotCentralParameterSet)]
-        [ValidateNotNullOrEmpty]
-        public string Name { get; set; }
+        public new string ResourceGroupName { get; set; }
 
         [Parameter(
             Mandatory = true,
@@ -56,6 +45,9 @@ namespace Microsoft.Azure.Commands.Management.IotCentral
             ParameterSetName = ResourceIdParameterSet)]
         [ValidateNotNullOrEmpty]
         public string ResourceId { get; set; }
+
+        [Parameter(Mandatory = false, HelpMessage = "Run cmdlet in the background")]
+        public SwitchParameter AsJob { get; set; }
 
         public override void ExecuteCmdlet()
         {

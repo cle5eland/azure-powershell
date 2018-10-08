@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Commands.IotCentral.Common;
+﻿using Commands.IotCentral.Common;
+using Microsoft.Azure.Commands.IotCentral.Common;
 using Microsoft.Azure.Commands.IotCentral.Models;
 using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
 using Microsoft.Azure.Commands.ResourceManager.Common.Tags;
@@ -10,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using ResourceProperties = Microsoft.Azure.Commands.Management.IotCentral.Properties;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,47 +19,8 @@ namespace Microsoft.Azure.Commands.Management.IotCentral
 {
     [Cmdlet("Set", ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "IotCentralApp", SupportsShouldProcess = true)]
     [OutputType(typeof(PSIotCentralApp))]
-    public class SetAzureRmIotCentralApp : IotCentralBaseCmdlet
+    public class SetAzureRmIotCentralApp : FullParameterSetCmdlet
     {
-        const string InteractiveIotCentralParameterSet = "InteractiveIotCentralParameterSet";
-        const string ResourceIdParameterSet = "ResourceIdParameterSet";
-        const string InputObjectParameterSet = "InputObjectParameterSet";
-
-        [Parameter(
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            Position = 0,
-            HelpMessage = "Name of the Resource Group",
-            ParameterSetName = InteractiveIotCentralParameterSet)]
-        [ResourceGroupCompleter]
-        [ValidateNotNullOrEmpty]
-        public string ResourceGroupName { get; set; }
-
-        [Parameter(
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            Position = 1,
-            HelpMessage = "Name of the Iot Central Application Resource",
-            ParameterSetName = InteractiveIotCentralParameterSet)]
-        [ValidateNotNullOrEmpty]
-        public string Name { get; set; }
-
-        [Parameter(
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            HelpMessage = "Iot Central Application Resource Id",
-            ParameterSetName = ResourceIdParameterSet)]
-        [ValidateNotNullOrEmpty]
-        public string ResourceId { get; set; }
-
-        [Parameter(
-            Mandatory = true,
-            ValueFromPipeline = true,
-            HelpMessage = "Iot Central Application Input Object",
-            ParameterSetName = InputObjectParameterSet)]
-        [ValidateNotNullOrEmpty]
-        public PSIotCentralApp InputObject { get; set; }
-
         [Parameter(
             Mandatory = false,
             ValueFromPipelineByPropertyName = true,
@@ -72,37 +35,50 @@ namespace Microsoft.Azure.Commands.Management.IotCentral
         [ValidateNotNullOrEmpty]
         public Hashtable Tag { get; set; }
 
+        [Parameter(Mandatory = false, HelpMessage = "Run cmdlet in the background")]
+        public SwitchParameter AsJob { get; set; }
+
         public override void ExecuteCmdlet()
         {
-            switch (ParameterSetName)
+            if (ShouldProcess(Name, ResourceProperties.Resources.SetIotCentralApp))
             {
-                case InteractiveIotCentralParameterSet:
-                    break;
-                case InputObjectParameterSet:
-                    this.ResourceGroupName = this.InputObject.Resourcegroup;
-                    this.Name = this.InputObject.Name;
-                    break;
-                case ResourceIdParameterSet:
-                    var identifier = new ResourceIdentifier(this.ResourceId);
-                    this.ResourceGroupName = identifier.ResourceGroupName;
-                    this.Name = identifier.ResourceName;
-                    break;
-                default:
-                    throw new PSArgumentException("BadParameterSetName");
+                this.SetNameAndResourceGroup();
+                AppPatch applicationPatch = CreateApplicationPatch();
+                App updatedIotCentralApplication = this.IotCentralClient.Apps.Update(this.ResourceGroupName, this.Name, applicationPatch);
+                this.WriteObject(IotCentralUtils.ToPSIotCentralApp(updatedIotCentralApplication));
             }
+        }
+
+        private AppPatch CreateApplicationPatch()
+        {
+            App existingIotCentralApplication = this.GetApplication();
+            this.SetApplicationDisplayName(existingIotCentralApplication);
+            this.SetApplicationTags(existingIotCentralApplication);
+            AppPatch iotCentralAppPatch = IotCentralUtils.CreateAppPatch(existingIotCentralApplication);
+            return iotCentralAppPatch;
+        }
+
+        private void SetApplicationDisplayName(App application)
+        {
+            application.DisplayName = this.DisplayName ?? application.DisplayName;
+        }
+
+        private void SetApplicationTags(App application)
+        {
+            if (this.Tag != null)
+            {
+                application.Tags = TagsConversionHelper.CreateTagDictionary(this.Tag, true);
+            }
+        }
+
+        private App GetApplication()
+        {
             App existingIotCentralApplication = this.IotCentralClient.Apps.Get(this.ResourceGroupName, this.Name);
             if (existingIotCentralApplication == null)
             {
                 throw new PSArgumentException("Requested Iot Central Application does not exist");
             }
-            existingIotCentralApplication.DisplayName = this.DisplayName ?? existingIotCentralApplication.DisplayName;
-            if (this.Tag != null)
-            {
-                existingIotCentralApplication.Tags = TagsConversionHelper.CreateTagDictionary(this.Tag, true);
-            }
-
-            var updatedIotCentralApplication = this.IotCentralClient.Apps.CreateOrUpdate(this.ResourceGroupName, this.Name, existingIotCentralApplication);
-            this.WriteObject(updatedIotCentralApplication);
+            return existingIotCentralApplication;
         }
     }
 }

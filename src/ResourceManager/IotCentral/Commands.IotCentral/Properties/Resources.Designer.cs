@@ -68,5 +68,23 @@ namespace Microsoft.Azure.Commands.Management.IotCentral.Properties {
                 return ResourceManager.GetString("NewIotCentralApp", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete an Iot Central Application.
+        /// </summary>
+        internal static string RemoveIotCentralApp {
+            get {
+                return ResourceManager.GetString("RemoveIotCentralApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update an Iot Central Application.
+        /// </summary>
+        internal static string SetIotCentralApp {
+            get {
+                return ResourceManager.GetString("SetIotCentralApp", resourceCulture);
+            }
+        }
     }
 }

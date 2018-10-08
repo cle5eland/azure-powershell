@@ -36,6 +36,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Common\FullParameterSetCmdlet.cs" />
     <Compile Include="Common\IotCentralBaseCmdlet.cs" />
     <Compile Include="Common\IotCentralUtils.cs" />
     <Compile Include="IotCentral\GetAzureRmIotCentralApp.cs" />
@@ -62,12 +63,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="AzureRM.IotCentral.psd1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="MSSharedLibKey.snk" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="StartupScripts\*.ps1" />
   </ItemGroup>
   <ItemGroup>

@@ -4,23 +4,47 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.Commands.Common.Authentication;
 using Microsoft.Azure.Commands.Common.Authentication.Abstractions;
 using Microsoft.Azure.Commands.ResourceManager.Common;
+using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
 using Microsoft.Azure.Management.Internal.Resources;
 using Microsoft.Azure.Management.IotCentral;
 
 namespace Microsoft.Azure.Commands.IotCentral.Common
 {
-    public class IotCentralBaseCmdlet : AzureRMCmdlet
+    public abstract class IotCentralBaseCmdlet : AzureRMCmdlet
     {
         private IIotCentralClient iotCentralClient;
 
         private IResourceManagementClient resourceManagementClient;
 
-        const string InteractiveIotCentralParameterSet = "InteractiveIotCentralParameterSet";
+        protected const string InteractiveIotCentralParameterSet = "InteractiveIotCentralParameterSet";
+        protected const string ResourceIdParameterSet = "ResourceIdParameterSet";
+        protected const string InputObjectParameterSet = "InputObjectParameterSet";
+
+        [Parameter(
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 0,
+            HelpMessage = "Name of the Resource Group",
+            ParameterSetName = InteractiveIotCentralParameterSet)]
+        [ResourceGroupCompleter]
+        [ValidateNotNullOrEmpty]
+        public string ResourceGroupName { get; set; }
+
+        [Parameter(
+            Mandatory = true,
+            ValueFromPipelineByPropertyName = true,
+            Position = 1,
+            HelpMessage = "Name of the Iot Central Application Resource",
+            ParameterSetName = InteractiveIotCentralParameterSet)]
+        [ValidateNotNullOrEmpty]
+        public string Name { get; set; }
+
 
         protected IIotCentralClient IotCentralClient
         {

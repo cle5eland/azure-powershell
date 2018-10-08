@@ -29,12 +29,14 @@ namespace Commands.IotCentral.Common
             return ConvertObject<IEnumerable<App>, IEnumerable<PSIotCentralApp>>(iotCentralApps.ToList());
         }
 
-        public static string GetResourceGroupName(string Id)
+        public static AppPatch CreateAppPatch(App iotCentralApp)
         {
-            if (string.IsNullOrEmpty(Id)) return null;
-            Regex r = new Regex(@"(.*?)/resourcegroups/(?<rgname>\S+)/providers/(.*?)", RegexOptions.IgnoreCase);
-            Match m = r.Match(Id);
-            return m.Success ? m.Groups["rgname"].Value : null;
+            var copiedIotCenralApp = new AppPatch()
+            {
+                DisplayName = iotCentralApp.DisplayName,
+                Tags = iotCentralApp.Tags
+            };
+            return copiedIotCenralApp;
         }
     }
 }

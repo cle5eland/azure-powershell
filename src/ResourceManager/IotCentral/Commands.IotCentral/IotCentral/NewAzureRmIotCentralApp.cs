@@ -8,6 +8,8 @@ using ResourceProperties = Microsoft.Azure.Commands.Management.IotCentral.Proper
 using System.Management.Automation;
 using Commands.IotCentral.Common;
 using System.Collections;
+using Microsoft.Azure.Commands.ResourceManager.Common.Tags;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.Commands.Management.IotCentral
 {
@@ -15,27 +17,6 @@ namespace Microsoft.Azure.Commands.Management.IotCentral
     [OutputType(typeof(PSIotCentralApp))]
     public class NewAzureRmIotCentralApp : IotCentralBaseCmdlet
     {
-        const string InteractiveIotCentralParameterSet = "InteractiveIotCentralParameterSet";
-
-        [Parameter(
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            Position = 0,
-            HelpMessage = "Name of the Resource Group",
-            ParameterSetName = InteractiveIotCentralParameterSet)]
-        [ResourceGroupCompleter]
-        [ValidateNotNullOrEmpty]
-        public string ResourceGroupName { get; set; }
-
-        [Parameter(
-            Mandatory = true,
-            ValueFromPipelineByPropertyName = true,
-            Position = 1,
-            HelpMessage = "Name of the Iot Central Application Resource",
-            ParameterSetName = InteractiveIotCentralParameterSet)]
-        [ValidateNotNullOrEmpty]
-        public string Name { get; set; }
-
         [Parameter(
             Mandatory = true,
             ValueFromPipelineByPropertyName = true,
@@ -81,7 +62,8 @@ namespace Microsoft.Azure.Commands.Management.IotCentral
         [ValidateNotNullOrEmpty]
         public Hashtable Tag { get; set; }
 
-
+        [Parameter(Mandatory = false, HelpMessage = "Run cmdlet in the background")]
+        public SwitchParameter AsJob { get; set; }
 
         public override void ExecuteCmdlet()
         {
@@ -98,7 +80,8 @@ namespace Microsoft.Azure.Commands.Management.IotCentral
                     Subdomain = this.Subdomain,
                     Template = this.Template,
                     Sku = new AppSkuInfo() { Name = this.GetAppSkuName() },
-                    Location = this.GetLocation()
+                    Location = this.GetLocation(),
+                    Tags = this.GetTags()
                 };
 
                 this.IotCentralClient.Apps.CreateOrUpdate(this.ResourceGroupName, this.Name, iotCentralApp);
@@ -106,6 +89,15 @@ namespace Microsoft.Azure.Commands.Management.IotCentral
                 this.WriteObject(IotCentralUtils.ToPSIotCentralApp(createdIotCentralApp), false);
             }
             
+        }
+
+        private IDictionary<string, string> GetTags()
+        {
+            if (this.Tag != null)
+            {
+                return TagsConversionHelper.CreateTagDictionary(this.Tag, true);
+            }
+            return null;
         }
 
         private string GetAppSkuName()
