@@ -1,25 +1,17 @@
-﻿using Commands.IotCentral.Common;
-using Microsoft.Azure.Commands.IotCentral.Common;
+﻿using Microsoft.Azure.Commands.IotCentral.Common;
 using Microsoft.Azure.Commands.IotCentral.Models;
-using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
 using Microsoft.Azure.Commands.ResourceManager.Common.Tags;
-using Microsoft.Azure.Management.Internal.Resources.Utilities.Models;
 using Microsoft.Azure.Management.IotCentral;
 using Microsoft.Azure.Management.IotCentral.Models;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 using ResourceProperties = Microsoft.Azure.Commands.Management.IotCentral.Properties;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Commands.Management.IotCentral
 {
-    [Cmdlet("Set", ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "IotCentralApp", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Set, ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "IotCentralApp", SupportsShouldProcess = true)]
     [OutputType(typeof(PSIotCentralApp))]
-    public class SetAzureRmIotCentralApp : FullParameterSetCmdlet
+    public class SetAzureRmIotCentralApp : IotCentralFullParameterSetCmdlet
     {
         [Parameter(
             Mandatory = false,

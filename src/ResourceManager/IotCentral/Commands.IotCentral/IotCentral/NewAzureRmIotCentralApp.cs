@@ -6,14 +6,13 @@ using Microsoft.Azure.Management.IotCentral;
 using Microsoft.Azure.Management.IotCentral.Models;
 using ResourceProperties = Microsoft.Azure.Commands.Management.IotCentral.Properties;
 using System.Management.Automation;
-using Commands.IotCentral.Common;
 using System.Collections;
 using Microsoft.Azure.Commands.ResourceManager.Common.Tags;
 using System.Collections.Generic;
 
 namespace Microsoft.Azure.Commands.Management.IotCentral
 {
-    [Cmdlet("New", ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "IotCentralApp", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.New, ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "IotCentralApp", SupportsShouldProcess = true)]
     [OutputType(typeof(PSIotCentralApp))]
     public class NewAzureRmIotCentralApp : IotCentralBaseCmdlet
     {

@@ -1,17 +1,14 @@
 ﻿using Microsoft.Azure.Commands.IotCentral.Models;
-using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
 using Microsoft.Azure.Management.Internal.Resources.Utilities.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Commands.IotCentral.Common
 {
-    public abstract class FullParameterSetCmdlet : IotCentralBaseCmdlet
+    public abstract class IotCentralFullParameterSetCmdlet : IotCentralBaseCmdlet
     {
+        /// <summary>
+        /// Iot Central Application ResourceId
+        /// </summary>
         [Parameter(
             Mandatory = true,
             ValueFromPipelineByPropertyName = true,
@@ -20,6 +17,9 @@ namespace Microsoft.Azure.Commands.IotCentral.Common
         [ValidateNotNullOrEmpty]
         public string ResourceId { get; set; }
 
+        /// <summary>
+        /// Iot Central Application Input Object
+        /// </summary>
         [Parameter(
             Mandatory = true,
             ValueFromPipeline = true,
@@ -28,6 +28,9 @@ namespace Microsoft.Azure.Commands.IotCentral.Common
         [ValidateNotNullOrEmpty]
         public PSIotCentralApp InputObject { get; set; }
 
+        /// <summary>
+        /// Uses the applicable parameter group to set the Name and ResouceName for the current execution.
+        /// </summary>
         protected void SetNameAndResourceGroup()
         {
             switch (ParameterSetName)

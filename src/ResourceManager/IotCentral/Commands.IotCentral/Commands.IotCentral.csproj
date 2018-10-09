@@ -44,7 +44,6 @@
     <Compile Include="IotCentral\RemoveAzureRmIotCentralApp.cs" />
     <Compile Include="IotCentral\SetAzureRmIotCentralApp.cs" />
     <Compile Include="Models\PSIotCentralApp.cs" />
-    <Compile Include="Models\PSIotCentralAppProperties.cs" />
     <Compile Include="Models\PSIotCentralAppSku.cs" />
     <Compile Include="Models\PSIotCentralAppSkuInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,4 +100,7 @@
     </ItemGroup>
     <Copy SourceFiles="@(MarkdownFiles)" DestinationFolder="$(OutputPath)\help\" ContinueOnError="false" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(SolutionDir)Package\$(ConfigurationName)\*.*" $(TargetDir) /Y /E</PostBuildEvent>
+  </PropertyGroup>
 </Project>

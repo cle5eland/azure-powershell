@@ -1,22 +1,15 @@
 ﻿using Microsoft.Azure.Commands.IotCentral.Common;
 using Microsoft.Azure.Commands.IotCentral.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using Microsoft.Azure.Commands;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Azure.Commands.ResourceManager.Common.ArgumentCompleters;
-using ResourceManager = Microsoft.Azure.Commands.ResourceManager;
 using Microsoft.Azure.Management.IotCentral.Models;
 using Microsoft.Azure.Management.IotCentral;
-using Commands.IotCentral.Common;
 using Microsoft.Azure.Management.Internal.Resources.Utilities.Models;
 
 namespace Microsoft.Azure.Commands.Management.IotCentral
 {
-    [Cmdlet("Get", ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "IotCentralApp", DefaultParameterSetName = ListIotCentralAppsParameterSet)]
+    [Cmdlet(VerbsCommon.Get, ResourceManager.Common.AzureRMConstants.AzureRMPrefix + "IotCentralApp", DefaultParameterSetName = ListIotCentralAppsParameterSet)]
     [OutputType(typeof(PSIotCentralApp))]
     public class GetAzureRmIotCentralApp : IotCentralBaseCmdlet
     {

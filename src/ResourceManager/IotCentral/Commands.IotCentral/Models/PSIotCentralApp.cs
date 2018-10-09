@@ -1,11 +1,6 @@
-﻿using Commands.IotCentral.Common;
-using Microsoft.Azure.Management.Internal.Resources.Utilities.Models;
+﻿using Microsoft.Azure.Management.Internal.Resources.Utilities.Models;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Commands.IotCentral.Models
 {
